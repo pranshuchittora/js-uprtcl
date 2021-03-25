@@ -57,6 +57,9 @@ export class DocumentEditor extends servicesConnect(LitElement) {
   @property({ type: Object, attribute: false })
   localEvees!: Evees;
 
+  @property()
+  documentAdapter;
+
   @internalProperty()
   reloading = true;
 
@@ -1003,6 +1006,9 @@ export class DocumentEditor extends servicesConnect(LitElement) {
 
     return html`
       <div class=${editorClasses.join(' ')}>
+      <!-- TEST -->
+      ${this.documentAdapter.getForks()}
+      <!-- TEST END -->
         ${this.renderDocNode(this.doc)} ${this.renderDocumentEnd()}
       </div>
       <!-- <div @click=${this.clickAreaClicked} class="click-area"></div> -->
