@@ -86,6 +86,18 @@ export class TextNodeCommon
     ];
   };
 
+  preview = (node: TextNode): Lens<RenderEntityInput> => {
+    return {
+        name: 'documents:preview',
+        type: 'content',
+        render: (input: RenderEntityInput, evees?: Evees) => {
+          return html`<documents-preview
+            uref=${input.uref}
+          ></documents-preview>`
+        }
+      };
+  };
+
   /** lenses top is a lense that dont render the node children, leaving the job to an upper node tree controller */
   docNodeLenses = (): DocNodeLens[] => {
     return [
@@ -152,9 +164,19 @@ export class TextNodeCommon
   };
 }
 
+const MAX_TITLE_LENGTH = 50;
 export class TextNodeTitle implements HasTitle, HasDiffLenses {
-  title = (textNode: TextNode) => {
-    return htmlToText(textNode.text);
+  titleHtml = (textNode: TextNode): TemplateResult => {
+    const plainText = htmlToText(textNode.text);
+    if (
+      textNode.text.startsWith('<img')
+    )
+      return html`<i>Image</i>i>`;
+
+    return textNode.text.startsWith('<img')
+      ? ''
+      : textNode.text
+          .substring(0, MAX_TITLE_LENGTH);
   };
 
   diffLenses = (node?: TextNode): DiffLens[] => {
