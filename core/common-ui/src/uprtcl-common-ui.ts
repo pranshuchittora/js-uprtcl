@@ -8,7 +8,7 @@ export { UprtclList } from './elements/list';
 export { UprtclListItem } from './elements/list-item';
 export { UprtclCard } from './elements/card';
 export { UprtclButtonLoading } from './elements/button-loading';
-export { UprtclPopper } from './elements/popper';
+export { UprtclPopper, PopperPostion } from './elements/popper';
 export { UprtclOptionsMenu } from './elements/options-menu';
 export { UprtclHelp } from './elements/help';
 export { UprtclFormString } from './elements/form-string';

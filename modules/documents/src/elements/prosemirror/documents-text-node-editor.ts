@@ -674,9 +674,8 @@ export class DocumentTextNodeEditor extends LitElement {
       const end = node.nodeSize;
       const imgNode = this.editor.view.state.schema.nodes.image.create({
         src: link,
-        style: `${width !== '' ? `width:${width}px` : ''};${
-          height !== '' ? `height:${height}px` : ''
-        };max-width: 100%;margin: 0 auto;border-radius: 5px;`,
+        style: `${width !== '' ? `width:${width}px` : ''};${height !== '' ? `height:${height}px` : ''
+          };max-width: 100%;margin: 0 auto;border-radius: 5px;`,
       });
       this.dispatchTransaction(this.editor.view.state.tr.replaceSelectionWith(imgNode, false));
       this.alignNodeToCenter();
@@ -720,9 +719,8 @@ export class DocumentTextNodeEditor extends LitElement {
     if (this.isValidLink(link)) {
       const iframeNode = this.editor.view.state.schema.nodes.iframe.create({
         src: this.parseYoutubeURL(link),
-        style: `width:${
-          width !== '' ? width + 'px' : '100%'
-        };height:52vw;border:0px;max-width:100%;max-height:470px;`,
+        style: `width:${width !== '' ? width + 'px' : '100%'
+          };height:52vw;border:0px;max-width:100%;max-height:470px;`,
       });
 
       this.dispatchTransaction(this.editor.view.state.tr.replaceSelectionWith(iframeNode, false));
@@ -764,12 +762,7 @@ export class DocumentTextNodeEditor extends LitElement {
     //   <input @keydown=${this.urlKeydown} class="dim" placeholder="height" id="DIM_HEIGHT" />px
     // `;
     return html`
-      <input
-        @keydown=${this.urlKeydown}
-        class="dim"
-        placeholder="width (optional)"
-        id="DIM_WIDTH"
-      />
+      <input @keydown=${this.urlKeydown} class="dim" placeholder="width (optional)" id="DIM_WIDTH" />
     `;
   }
 
@@ -777,18 +770,14 @@ export class DocumentTextNodeEditor extends LitElement {
     return html`
       <div class="inp">
         <div class="inp-hldr">
-          <input
-            @keydown=${this.urlKeydown}
-            placeholder="${this.activeSubMenu !== ActiveSubMenu.LINK
+          <input @keydown=${this.urlKeydown} placeholder="${this.activeSubMenu !== ActiveSubMenu.LINK
               ? this.activeSubMenu + ' '
-              : ''}url"
-            id="URL_INPUT"
-          />
+              : ''}url" id="URL_INPUT" />
           ${this.showDimMenu ? this.renderDimensionsMenu() : ''}
         </div>
         <div class="inp-actions">
-          <button @click=${this.subMenuCancel} class="btn btn-small">${icons.cross}</button>
-          <button @click=${this.subMenuConfirm} class="btn btn-small">${icons.check}</button>
+          <button @click=${this.subMenuCancel} class="btn btn-large">${icons.cross}</button>
+          <button @click=${this.subMenuConfirm} class="btn btn-large">${icons.check}</button>
         </div>
       </div>
     `;
@@ -798,10 +787,10 @@ export class DocumentTextNodeEditor extends LitElement {
     return html`
       ${this.level > 2
         ? html`
-            <button class="btn btn-text" @click=${() => this.toHeading(true)}>
-              <span>h${this.level - 1}</span>
-            </button>
-          `
+      <button class="btn btn-text" @click=${() => this.toHeading(true)}>
+        <span>h${this.level - 1}</span>
+      </button>
+      `
         : ''}
       <button class="btn btn-text" @click=${() => this.toHeading(false)}>
         <span>h${this.level}</span>
@@ -813,12 +802,12 @@ export class DocumentTextNodeEditor extends LitElement {
     return this.level > 1
       ? html`
           ${this.level > 2
-            ? html`
-                <button class="btn btn-text" @click=${() => this.reduceHeading()}>
-                  <span>h${this.level - 1}</span>
-                </button>
-              `
-            : ''}
+          ? html`
+          <button class="btn btn-text" @click=${() => this.reduceHeading()}>
+            <span>h${this.level - 1}</span>
+          </button>
+          `
+          : ''}
           <button class="btn btn-text" @click=${this.toParagraph}>
             <span>text</span>
           </button>
@@ -842,27 +831,32 @@ export class DocumentTextNodeEditor extends LitElement {
       ${this.renderLevelControllers()}
       ${this.type !== TextType.Title
         ? html`
-            <button
-              class="btn btn-square btn-large"
-              @click=${() => this.menuItemClick(this.editor.view.state.schema.marks.strong)}
-            >
-              ${icons.bold}
-            </button>
-          `
+      <button class="btn btn-square btn-large" @click=${() => this.menuItemClick(this.editor.view.state.schema.marks.strong)}
+        >
+        ${icons.bold_black}
+      </button>
+      `
         : ''}
-      <button
-        class="btn btn-square btn-large"
-        @click=${() => this.menuItemClick(this.editor.view.state.schema.marks.em)}
-      >
-        ${icons.em}
+      <button class="btn btn-square btn-large" @click=${() => this.menuItemClick(this.editor.view.state.schema.marks.em)}
+        >
+        ${icons.em_black}
+      </button>
+      <button class="btn btn-square btn-large" @click=${() => this.menuItemClick(this.editor.view.state.schema.marks.strike)}
+        >
+        ${icons.strikethrough}
       </button>
 
-      <button
-        class="btn btn-square btn-small"
-        @click=${() => this.subMenuClick(ActiveSubMenu.LINK)}
-      >
-        ${icons.link}
+      <button class="btn btn-square btn-large" @click=${() =>
+        this.menuItemClick(this.editor.view.state.schema.marks.underline)}
+        >
+        ${icons.underline_black}
       </button>
+
+      <button class="btn btn-square btn-large" @click=${() => this.subMenuClick(ActiveSubMenu.LINK)}
+        >
+        ${icons.link_black}
+      </button>
+
     `;
     return this.hasSelection() && type !== 'code' ? menus : '';
   }
@@ -885,34 +879,30 @@ export class DocumentTextNodeEditor extends LitElement {
 
   renderConvertMenu() {
     return html`<uprtcl-popper position="bottom-left">
-      <button slot="icon" class="btn">TextNode</button>
-      <uprtcl-list>
-        ${this.canConvertTo.map(
-          (to) =>
-            html`<uprtcl-list-item @click=${(e) => this.convertTo(to, e)}>${to}</uprtcl-list-item>`
-        )}
-      </uprtcl-list>
-    </uprtcl-popper>`;
+  <button slot="icon" class="btn">TextNode</button>
+  <uprtcl-list>
+    ${this.canConvertTo.map(
+      (to) =>
+        html`<uprtcl-list-item @click=${(e) => this.convertTo(to, e)}>${to}</uprtcl-list-item>`
+    )}
+  </uprtcl-list>
+</uprtcl-popper>`;
   }
 
   renderMenu() {
     const embedSubMenu = html`
-      <button
-        class="btn btn-square btn-small"
-        @click=${() => this.subMenuClick(ActiveSubMenu.IMAGE)}
-      >
-        ${icons.image}
+      <button class="btn btn-square btn-large" @click=${() => this.subMenuClick(ActiveSubMenu.IMAGE)}
+        >
+        ${icons.image_black}
       </button>
 
-      <button
-        class="btn btn-square btn-small"
-        @click=${() => this.subMenuClick(ActiveSubMenu.VIDEO)}
-      >
+      <button class="btn btn-square btn-large" @click=${() => this.subMenuClick(ActiveSubMenu.VIDEO)}
+        >
         ${icons.youtube}
       </button>
     `;
     const codeSubMenu = html`
-      <button class="btn btn-square btn-small" @click=${this.toggleCode}>${icons.code}</button>
+      <button class="btn btn-square btn-large" @click=${this.toggleCode}>${icons.code}</button>
     `;
 
     const type = this.getBlockType();
@@ -923,10 +913,19 @@ export class DocumentTextNodeEditor extends LitElement {
         <div class="menus">
           ${this.renderConvertMenu()}
           <!-- current level -->
-          <button class="btn-text btn-current">
-            <span>${type}</span>
-          </button>
+
+          <uprtcl-popper position="bottom-left">
+            <button slot="icon" class="btn btn-large btn-select-text-type">${type}</button>
+            <uprtcl-list>
+              <uprtcl-list-item>
+                Hello
+              </uprtcl-list-item>
+
+            </uprtcl-list>
+          </uprtcl-popper>
           ${this.renderSelectionOnlyMenus(type)}
+
+
           ${this.type === 'Paragraph' && type !== 'code' ? embedSubMenu : ''}
           ${this.type !== 'Title' ? codeSubMenu : ''}
         </div>
@@ -961,6 +960,7 @@ export class DocumentTextNodeEditor extends LitElement {
       styles,
       iconsStyle,
       theme,
+
       css`
         :host {
           position: relative;
@@ -979,14 +979,14 @@ export class DocumentTextNodeEditor extends LitElement {
           padding: 0px 0px;
           height: initial;
           top: -50px;
-          left: 25px;
-          background-color: white;
-          border-radius: 10px;
-          border: solid 1px #cfcfcf;
-          background-color: #28282a60;
+          background: #FFFFFF;
+          border: 2px solid rgba(0, 0, 0, 0.05);
+          box-shadow: 0px 10px 20px -2px rgba(14, 14, 44, 0.1);
+          border-radius: 8px;
           display: flex;
           flex-direction: column;
           max-width: calc(100vw - 50px);
+          color:#000;
         }
 
         .top-menu .menus {
@@ -1008,19 +1008,20 @@ export class DocumentTextNodeEditor extends LitElement {
 
         .btn {
           cursor: pointer;
-          border-radius: 8px;
           text-align: center;
-          fill: white;
-          color: white;
+          display:flex;
+          align-items:center;
+          justify-content:center;
         }
 
+
         .btn:hover {
-          background-color: #444444;
+          background-color: #ccc;
           transition: background-color 100ms linear;
         }
 
         .btn-text {
-          color: white;
+          color: black;
           padding: 12px 16px;
           font-weight: bold;
         }
@@ -1035,15 +1036,21 @@ export class DocumentTextNodeEditor extends LitElement {
         }
 
         .btn-large svg {
-          margin-top: 6px;
-          width: 30px;
-          height: 30px;
+          padding:8px;
+          width: 28px;
+          height: 28px;
         }
 
         .btn-small svg {
-          margin-top: 8px;
-          width: 26px;
-          height: 26px;
+          padding:8px;
+          width: 16px;
+          height: 16px;
+        }
+        .btn-select-text-type{
+          border-left-width:1px;
+          border-right-width:1px;
+          border-style:solid;
+          border-color:#000;
         }
 
         .inp {

@@ -1,5 +1,5 @@
 import { LitElement, property, html, css, query } from 'lit-element';
-
+import { PopperPostion } from './popper'
 export interface MenuOption {
   text: string;
   icon?: string;
@@ -25,6 +25,9 @@ export class UprtclOptionsMenu extends LitElement {
   @property({ type: Boolean })
   secondary = false;
 
+  @property({ type: String })
+  position: PopperPostion = PopperPostion.bottomLeft
+
   @query('#popper')
   popper!: UprtclPopper;
 
@@ -46,7 +49,7 @@ export class UprtclOptionsMenu extends LitElement {
 
   render() {
     return html`
-      <uprtcl-popper id="popper" icon=${this.icon}>
+      <uprtcl-popper id="popper" icon=${this.icon} position=${this.position}>
         <slot name="icon" slot="icon"
           ><uprtcl-icon-button
             icon=${this.icon}
@@ -57,13 +60,13 @@ export class UprtclOptionsMenu extends LitElement {
         ></slot>
         <uprtcl-list>
           ${Array.from(this.config.entries()).map(([itemKey, item]) => {
-            return item.disabled !== undefined && item.disabled
-              ? html`
+      return item.disabled !== undefined && item.disabled
+        ? html`
                   <uprtcl-list-item icon=${item.icon ? item.icon : ''} disabled>
                     <span>${item.text}</span>
                   </uprtcl-list-item>
                 `
-              : html`
+        : html`
                   <uprtcl-list-item
                     icon=${item.icon ? item.icon : ''}
                     @click=${(e) => this.optionClicked(itemKey, e)}
@@ -71,7 +74,7 @@ export class UprtclOptionsMenu extends LitElement {
                     <span>${item.text}</span>
                   </uprtcl-list-item>
                 `;
-          })}
+    })}
         </uprtcl-list>
       </uprtcl-popper>
     `;

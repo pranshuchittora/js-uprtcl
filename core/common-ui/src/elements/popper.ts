@@ -1,11 +1,18 @@
 import { LitElement, property, html, css } from 'lit-element';
 
+export enum PopperPostion {
+  bottomLeft = 'bottom-left',
+  bottomRight = 'bottom-right',
+  topRight = 'top-right',
+  topLeft = 'top-left',
+  right = 'right',
+};
 export class UprtclPopper extends LitElement {
   @property({ type: String })
   icon = 'more_vert';
 
   @property({ type: String })
-  position = 'bottom-right';
+  position: PopperPostion = PopperPostion.bottomLeft;
 
   @property({ type: Boolean, attribute: 'disable-dropdown' })
   disableDropdown = false;
@@ -88,12 +95,12 @@ export class UprtclPopper extends LitElement {
           </slot>
         </div>
         ${this.showDropdown
-          ? html`
+        ? html`
               <uprtcl-card class=${classes.join(' ')}>
                 <slot></slot>
               </uprtcl-card>
             `
-          : ''}
+        : ''}
       </div>
     `;
   }
